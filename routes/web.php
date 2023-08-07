@@ -21,8 +21,14 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/todos/index', [App\Http\Controllers\TodoController::class, 'index'])->name('todos.index');
+Route::prefix('todos')->as('todos.')->group(function (){
+    Route::get('index', [App\Http\Controllers\TodoController::class, 'index'])->name('index');
+    Route::get('create', [App\Http\Controllers\TodoController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\TodoController::class, 'store'])->name('store');
+    Route::get('show/{id}', [App\Http\Controllers\TodoController::class, 'show'])->name('show');
+    Route::get('{id}/edit', [App\Http\Controllers\TodoController::class, 'edit'])->name('edit');
+    Route::put('update', [App\Http\Controllers\TodoController::class, 'update'])->name('update');
+    Route::delete('destroy', [App\Http\Controllers\TodoController::class, 'destroy'])->name('destroy');
+});
 
-Route::get('/todos/create', [App\Http\Controllers\TodoController::class, 'create'])->name('todos.create');
 
-Route::post('/todos/store', [App\Http\Controllers\TodoController::class, 'store'])->name('todos.store');
